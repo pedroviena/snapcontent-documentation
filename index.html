@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapContent AI - Documentation Hub</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons (for features) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0A1931; /* Dark Blue */
+            --secondary-color: #185ADB; /* Lighter Blue */
+            --accent-color: #00BCD4; /* Cyan for highlights */
+            --background-dark: #06141D; /* Very Dark Blue */
+            --background-light: #F0F2F5; /* Light Grey for contrast if needed */
+            --text-light: #FFFFFF; /* White text */
+            --text-dark: #FFFFFF; /* Also white for general text on dark background */
+            --card-bg: rgba(255, 255, 255, 0.08); /* Slightly transparent white for dark theme */
+            --card-border: rgba(255, 255, 255, 0.15);
+            --gradient-main: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            --gradient-cta: linear-gradient(90deg, #2ECC71, #3498DB); /* Green to Blue for CTA */
+            --footer-bg: #030A10; /* Even darker blue for footer */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background-dark);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .container-fluid {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .hero-section {
+            background: var(--gradient-main);
+            color: white;
+            text-align: center;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
+            animation: rotateBackground 20s infinite linear;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-placeholder {
+            margin-bottom: 40px;
+            /* Placeholder for logo */
+        }
+
+        .logo-placeholder img {
+            max-height: 80px; /* Adjust as needed */
+            width: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .hero-title {
+            font-size: 3.8rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            letter-spacing: -1.5px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-cta);
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4); /* Shadow based on CTA green */
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white; /* Ensure button text is white */
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(46, 204, 113, 0.6);
+            background: var(--gradient-cta); /* Keep the gradient on hover */
+            filter: brightness(1.1);
+        }
+
+        .about-section, .features-section, .guide-section, .security-section, .faq-section, .product-showcase-section, .video-demo-section {
+            background: var(--background-dark);
+            color: var(--text-light);
+            padding: 80px 0;
+        }
+        .about-section {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h2, h3, h4 {
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            font-size: 2.8rem;
+            margin-bottom: 40px;
+            color: var(--accent-color); /* Cyan for major headings */
+            text-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        h3 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--secondary-color); /* Lighter blue for sub-headings */
+        }
+        h4 {
+             font-size: 1.8rem;
+             color: var(--accent-color); /* Cyan for card titles etc. */
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            color: var(--text-light); /* Ensure all paragraph text is white */
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%; /* Ensure cards are same height in a row */
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--secondary-color); /* Lighter blue for card titles */
+            margin-bottom: 15px;
+        }
+
+        .list-unstyled li {
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+            opacity: 0.85;
+            color: var(--text-light); /* Ensure list item text is white */
+        }
+
+        .list-unstyled li strong {
+            color: var(--accent-color);
+        }
+
+        .accordion-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden; /* For rounded corners */
+        }
+
+        .accordion-button {
+            background-color: var(--primary-color); /* Dark blue for accordion header */
+            color: white;
+            font-weight: 600;
+            border-radius: 10px;
+            padding: 15px 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: var(--secondary-color); /* Lighter blue when open */
+            color: white;
+            box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: transparent;
+        }
+
+        .accordion-body {
+            color: var(--text-light);
+            padding: 20px;
+            background-color: rgba(0,0,0,0.2);
+            border-top: 1px solid var(--card-border);
+        }
+
+        code {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--accent-color);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        pre {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: var(--text-light);
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            border: 1px solid var(--card-border);
+        }
+
+        .footer {
+            background-color: var(--footer-bg); /* Even darker blue */
+            color: rgba(255, 255, 255, 0.7);
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+        }
+
+        .footer p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        .small-text {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px; /* Fixed height for consistency */
+            object-fit: cover; /* Cover the area, crop if necessary */
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 991.98px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            .btn-primary-custom {
+                padding: 12px 30px;
+                font-size: 1.1rem;
+            }
+            h2 {
+                font-size: 2.2rem;
+            }
+            h3 {
+                font-size: 1.8rem;
+            }
+            h4 {
+                font-size: 1.5rem;
+            }
+            .section-padding {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .hero-section {
+                padding: 80px 0;
+            }
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            .btn-primary-custom {
+                padding: 10px 25px;
+                font-size: 1rem;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+            h3 {
+                font-size: 1.6rem;
+            }
+            h4 {
+                font-size: 1.3rem;
+            }
+            .section-padding {
+                padding: 40px 0;
+            }
+            .card {
+                padding: 25px;
+            }
+            .card-title {
+                font-size: 1.4rem;
+            }
+            .product-image {
+                height: 200px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes rotateBackground {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-content">
+            <div class="logo-placeholder mb-5">
+                <!-- Replace with your actual logo image -->
+                <img src="/img/logo.png" alt="SnapContent AI Logo">
+            </div>
+            <h1 class="hero-title animate__animated animate__fadeInDown">SnapContent AI - Documentation Hub</h1>
+            <p class="hero-subtitle animate__animated animate__fadeInUp">
+                Unlock unparalleled content creation with the revolutionary power of Google's Generative AI.
+                Your definitive Next.js application for social media mastery!
+            </p>
+            <a href="#welcome" class="btn btn-primary-custom animate__animated animate__zoomIn">Explore Essential Features</a>
+            <a href="https://demo-snapcontentai.vercel.app/" class="btn btn-primary-custom animate__animated animate__zoomIn">Demo Version</a>
+        </div>
+    </section>
+
+    <!-- Welcome Section -->
+    <section id="welcome" class="section-padding about-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <h2>Welcome to SnapContent AI!</h2>
+                    <p class="lead">Thank you for choosing SnapContent AI<strong>!</strong> This <strong>powerful and innovative</strong> Next.js application is designed to help you or your clients effortlessly generate engaging social media content, optimize hashtags, create video scripts, analyze their viral potential, and manage a content calendar, all powered by Google's Generative AI.</p>
+                    <p>Whether you're a social media manager, a small business owner, or a developer looking for a solid AI-integrated starter kit, SnapContent AI provides the <strong>essential and dynamic</strong> tools you need. This documentation will walk you through setup, <strong>key</strong> features, customization, and best practices to <strong>maximize your success</strong>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Showcase Section -->
+    <section id="product-showcase" class="section-padding product-showcase-section">
+        <div class="container">
+            <h2 class="text-center">Visualize the Power of SnapContent AI in Action</h2>
+            <div class="row mt-5">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <img src="/img/intuitive.jpg" alt="Intuitive Interface" class="img-fluid product-image">
+                    <p class="text-center mt-3 small-text">An <strong>intuitive and sleek</strong> user interface for seamless content creation.</p>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <img src="/img/aicontent.jpg" alt="AI Content Generator" class="img-fluid product-image">
+                    <p class="text-center mt-3 small-text">Generate <strong>incredibly effective</strong> posts and scripts in seconds.</p>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <img src="/img/viral.jpg" alt="Viral Analysis" class="img-fluid product-image">
+                    <p class="text-center mt-3 small-text">Gain <strong>deep insights</strong> into your content's viral potential.</p>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <img src="/img/contentcalendar.jpg" alt="Content Calendar" class="img-fluid product-image">
+                    <p class="text-center mt-3 small-text">Stay organized with an <strong>intuitive and effective</strong> content calendar.</p>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <img src="/img/hastag.jpg" alt="Hashtag Optimization" class="img-fluid product-image">
+                    <p class="text-center mt-3 small-text">Optimize your hashtags for <strong>maximum reach</strong> and discoverability.</p>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <img src="/img/dynamicdash.jpg" alt="Dynamic Dashboard" class="img-fluid product-image">
+                    <p class="text-center mt-3 small-text">Monitor your performance with a <strong>dynamic and insightful</strong> dashboard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Demo Section -->
+    <section id="video-demo" class="section-padding video-demo-section">
+        <div class="container">
+            <h2 class="text-center">Watch SnapContent AI in Action</h2>
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-8">
+                    <div class="video-container">
+                        <iframe width="638" height="360" src="https://www.youtube.com/embed/1lckLNBbgOk" title="SnapContent AI: Generate Amazing Social Media Content with AI (Next.js)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <p class="text-center small-text">Watch this <strong>comprehensive demo video</strong> to see how SnapContent AI can <strong>revolutionize</strong> your content strategy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section-padding features-section">
+        <div class="container">
+            <h2 class="text-center">Essential Features That Will Transform Your Workflow</h2>
+            <div class="row mt-5">
+                <!-- Feature Card 1: Content Generator -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card text-center">
+                        <div class="card-icon"><i class="fas fa-magic"></i></div>
+                        <h5 class="card-title">Intelligent Content Generation</h5>
+                        <p class="card-text">Effortlessly create engaging social media posts, optimize hashtags, and craft <strong>captivating</strong> video scripts with the power of Google's Generative AI.</p>
+                    </div>
+                </div>
+                <!-- Feature Card 2: Virality Analysis -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card text-center">
+                        <div class="card-icon"><i class="fas fa-fire"></i></div>
+                        <h5 class="card-title">Viral Potential Analysis</h5>
+                        <p class="card-text">Analyze video scripts for their viral potential across platforms, receiving <strong>actionable</strong> insights to maximize reach and engagement.</p>
+                    </div>
+                </div>
+                <!-- Feature Card 3: Content Calendar -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card text-center">
+                        <div class="card-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <h5 class="card-title">Integrated Content Calendar</h5>
+                        <p class="card-text">Visualize and manage your content schedule, track published posts, and organize your tasks with an <strong>intuitive and efficient</strong> content calendar.</p>
+                    </div>
+                </div>
+                <!-- Feature Card 4: Hashtag Optimizer -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card text-center">
+                        <div class="card-icon"><i class="fas fa-hashtag"></i></div>
+                        <h5 class="card-title">AI Hashtag Optimization</h5>
+                        <p class="card-text">Get <strong>optimized</strong> hashtag suggestions based on your content and business profile to boost visibility and discoverability.</p>
+                    </div>
+                </div>
+                <!-- Feature Card 5: Customizable & Scalable -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card text-center">
+                        <div class="card-icon"><i class="fas fa-tools"></i></div>
+                        <h5 class="card-title">Fully Customizable & Scalable</h5>
+                        <p class="card-text">Built with Next.js, Tailwind CSS, and ShadCN UI components, offering <strong>easy</strong> customization and <strong>robust</strong> scalability for your growing needs.</p>
+                    </div>
+                </div>
+                <!-- Feature Card 6: User-Friendly Dashboard -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card text-center">
+                        <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                        <h5 class="card-title">Insightful Dashboard</h5>
+                        <p class="card-text">Monitor your content generation activity, topic frequency, and platform intent with a <strong>comprehensive and easy-to-understand</strong> dashboard.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section id="getting-started" class="section-padding guide-section">
+        <div class="container">
+            <h2 class="text-center">Getting Started - Your Journey to Success</h2>
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <h3 class="text-center mb-4">1. Simple and Quick Installation</h3>
+                        <p>Ensure you have Node.js (v18 or higher) and npm/yarn installed for a <strong>seamless experience</strong>.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-download me-2"></i> Download the project files from Envato Market.</li>
+                            <li><i class="fas fa-file-archive me-2"></i> Extract the ZIP file to your desired location.</li>
+                            <li><i class="fas fa-terminal me-2"></i> Open your terminal or command prompt, navigate to the project's root directory.</li>
+                            <li><i class="fas fa-cogs me-2"></i> Install dependencies with:
+                                <pre><code>npm install</code></pre>
+                                or if you use yarn:
+                                <pre><code>yarn install</code></pre>
+                            </li>
+                            <li><i class="fas fa-play me-2"></i> Start the development server:
+                                <pre><code>npm run dev</code></pre>
+                                or
+                                <pre><code>yarn dev</code></pre>
+                            </li>
+                            <li><i class="fas fa-globe me-2"></i> Open your browser and navigate to <code>http://localhost:9002</code> (or the port specified in your terminal) to see the <strong>magic happen</strong>!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <h3 class="text-center mb-4">2. Essential API Key Configuration</h3>
+                        <p>SnapContent AI uses Google's Generative AI. You'll need a Google AI API key to <strong>unlock its full potential</strong>.</p>
+                        <h4 class="mt-4 mb-3">Get Your API Key for Free</h4>
+                        <p>You can obtain a free Google AI API key from <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-decoration-none" style="color: var(--accent-color);">Google AI Studio</a>. Ensure your key has access to the Gemini models for <strong>optimal performance</strong>.</p>
+                        <p>There are two ways to configure your API key for your <strong>convenience</strong>:</p>
+
+                        <h4 class="mt-4 mb-3">Recommended for Production (Environment Variable):</h4>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-file-code me-2"></i> Create a file named <code>.env</code> in the root of your project (if it doesn't exist).</li>
+                            <li><i class="fas fa-key me-2"></i> Add the following line, replacing <code>YOUR_API_KEY_HERE</code> with your actual key:
+                                <pre><code>GOOGLE_API_KEY=YOUR_API_KEY_HERE</code></pre>
+                            </li>
+                            <li><i class="fas fa-shield-alt me-2"></i> Ensure <code>.env</code> is listed in your <code>.gitignore</code> file to prevent committing your key and <strong>maintain the security</strong> of your information.</li>
+                            <li><i class="fas fa-sync-alt me-2"></i> Restart your development server for the changes to take effect.</li>
+                        </ul>
+
+                        <h4 class="mt-4 mb-3">For Quick Testing (In-App Settings):</h4>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-cog me-2"></i> Navigate to the "Settings" page within the SnapContent AI application.</li>
+                            <li><i class="fas fa-save me-2"></i> Enter your API key in the provided field and click "Save & Validate Key" for <strong>instant validation</strong>.</li>
+                            <li><i class="fas fa-info-circle me-2"></i> This key will be stored in your browser's local storage. While convenient, this method is less secure than environment variables for production.</li>
+                        </ul>
+
+                        <h4 class="mt-4 mb-3">Security Best Practice:</h4>
+                        <p class="small-text"><i class="fas fa-lock me-2"></i> Always prefer using environment variables for API keys in production environments for <strong>superior security and peace of mind</strong>.</p>
+                    
+                     <h2 class="text-center">Seamless Deployment Options</h2>
+                     <p class="text-center">SnapContent AI is built with Next.js and can be deployed to various platforms that support Node.js applications. Vercel and Netlify are <strong>excellent</strong> choices for <strong>easy and efficient</strong> deployment.</p>
+
+                    <h4 class="mt-5 mb-3 text-center">General Build Command:</h4>
+                    <p class="text-center">Before deploying, you'll typically build the application:</p>
+                    <pre><code>npm run build</code></pre>
+                    or
+                    <pre><code>yarn build</code></pre>
+                    <p class="small-text text-center">This creates an <strong>optimized</strong> production build in the <code>.next</code> folder.</p>
+
+                    <h3 class="mt-5 text-center">Deploying to Vercel (Highly Recommended)</h3>
+                    <ul class="list-unstyled">
+                            <li><i class="fab fa-github me-2"></i> Push your project to a Git repository (e.g., GitHub, GitLab, Bitbucket).</li>
+                            <li><i class="fas fa-user-plus me-2"></i> Sign up or log in to <a href="https://vercel.com/" target="_blank" class="text-decoration-none" style="color: var(--accent-color);">Vercel</a> for a <strong>hassle-free</strong> deployment!</li>
+                            <li><i class="fas fa-plus-circle me-2"></i> Click "Add New..." → "Project".</li>
+                            <li><i class="fas fa-file-import me-2"></i> Import your Git repository. Vercel will automatically detect it as a Next.js project, <strong>simplifying the setup process</strong>.</li>
+                            <li><i class="fas fa-database me-2"></i> <strong>Configure Essential Environment Variables:</strong>
+                                <ul class="list-unstyled ms-4">
+                                    <li>Go to your project settings on Vercel.</li>
+                                    <li>Navigate to "Environment Variables".</li>
+                                    <li>Add your <code>GOOGLE_API_KEY</code> with its value to ensure the <strong>full functionality</strong> of your application.</li>
+                                </ul>
+                            </li>
+                            <li><i class="fas fa-cloud-upload-alt me-2"></i> Click "Deploy". Vercel will build and deploy your application <strong>quickly and precisely</strong>!</li>
+                        </ul>
+                    <h3 class="mt-5 text-center">Deploying to Netlify</h3>
+                    <ul class="list-unstyled">
+                            <li><i class="fab fa-github me-2"></i> Push your project to a Git repository.</li>
+                            <li><i class="fas fa-user-plus me-2"></i> Sign up or log in to <a href="https://www.netlify.com/" target="_blank" class="text-decoration-none" style="color: var(--accent-color);">Netlify</a> for an <strong>efficient</strong> deployment!</li>
+                            <li><i class="fas fa-plus-circle me-2"></i> Click "Add new site" → "Import an existing project".</li>
+                            <li><i class="fas fa-cogs me-2"></i> Netlify should automatically detect Next.js settings. Default build command is usually <code>npm run build</code> or <code>next build</code>, and publish directory is <code>.next</code>. If you need to customize, Netlify uses a <code>netlify.toml</code> file or UI settings.</li>
+                            <li><i class="fas fa-database me-2"></i> <strong>Configure Essential Environment Variables:</strong>
+                                <ul class="list-unstyled ms-4">
+                                    <li>Go to your site settings on Netlify.</li>
+                                    <li>Navigate to "Build & deploy" → "Environment".</li>
+                                    <li>Add your <code>GOOGLE_API_KEY</code> with its value.</li>
+                                </ul>
+                            </li>
+                            <li><i class="fas fa-cloud-upload-alt me-2"></i> Click "Deploy site". Netlify will build and deploy your application with <strong>reliability and speed</strong>!</li>
+                        </ul>
+                        <h4 class="mt-5 text-center">Serverless Functions</h4>
+                    <p class="text-center small-text">SnapContent AI utilizes Next.js API Routes and Genkit flows which often deploy as serverless functions on platforms like Vercel and Netlify. This is handled automatically by these platforms for Next.js projects, <strong>ensuring scalability and efficiency</strong>.</p>
+                                        <h2 class="text-center">Best Practices & Advanced Tips - Take Your Content to the Next Level</h2>
+                        <h4 class="card-title"><i class="fas fa-robot me-2"></i> Refining AI Prompts - Intelligent Optimization</h4>
+                        <p>The core AI prompts are located in <code>src/ai/flows/</code> (e.g., <code>generate-social-media-post.ts</code>, <code>generate-video-script-flow.ts</code>, etc.). If you're comfortable with Genkit and prompt engineering, you can tweak these prompts to better suit very specific niches or to change the AI's output style further. Always test changes <strong>meticulously</strong> to ensure <strong>perfect results</strong>.</p>
+                        <h4 class="card-title"><i class="fas fa-universal-access me-2"></i> Accessibility (a11y) - Content for Everyone</h4>
+                        <p>SnapContent AI uses ShadCN UI components, which are built with accessibility in mind (ARIA attributes, keyboard navigation). However, always test your application with assistive technologies and ensure good color contrast, especially after making theme customizations. Tools like browser developer tools' accessibility inspectors or Axe DevTools can help identify issues, <strong>ensuring an inclusive experience for all users</strong>.</p>
+                        <h4 class="card-title"><i class="fas fa-code me-2"></i> Code Quality & Maintenance - Robustness and Durability</h4>
+                        <p>For long-term maintainability, especially if you plan to extend the application, consider the following <strong>essential</strong> practices:</p>
+ <ul class="list-unstyled ms-3">
+                            <li><i class="fas fa-brush me-2"></i> Consider integrating a code formatter like <strong>Prettier</strong> and a linter like <strong>ESLint</strong> into your development workflow. This helps maintain consistent code style and <strong>high-quality</strong> code.</li>
+                            <li><i class="fas fa-compress-alt me-2"></i> Keep components small and focused on a single responsibility to <strong>facilitate maintenance and code clarity</strong>.</li>
+                            <li><i class="fas fa-comment-alt me-2"></i> Write clear comments for complex logic, especially within AI flows or custom hooks, <strong>ensuring your code is understandable and collaborative</strong>.</li>
+                        </ul>
+                    <h4 class="card-title"><i class="fas fa-expand-alt me-2"></i> Extending Functionality - Unlimited Potential</h4>
+                        <p>The application is built on Next.js and Genkit. You can add new AI flows, create new pages and components, or integrate with other services as needed. The existing structure provides an excellent starting point. For example, you could add more AI models, support image generation directly within the app, or integrate with social media scheduling APIs, <strong>infinitely expanding its capabilities</strong>.</p>
+            <h2 class="text-center">FAQ & Troubleshooting - Quick Answers to Your Questions</h2>
+<div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Q: I'm getting errors related to my API key. What should I do?
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p>A: Ensure your Google AI API key is correct, has billing enabled (if required by Google for the models used), and is properly configured either as an environment variable (<code>GOOGLE_API_KEY</code> in an <code>.env</code> file or your hosting provider's settings) or via the in-app Settings page. If using environment variables, restart your development server or redeploy. Check the error messages for specific clues (e.g., "API key not valid", "permission denied").</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Q: The AI is not generating content, or the output is strange.
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p>A: This could be due to several reasons:</p>
+                                    <ul>
+                                        <li><strong>API Key Issue:</strong> Double-check your API key (see above).</li>
+                                        <li><strong>Model Quotas/Limits:</strong> Google AI services might have usage quotas. Check your Google Cloud Console or AI Studio for any limitations.</li>
+                                        <li><strong>Prompt Issues:</strong> If you've modified prompts, ensure they are well-formed. Complex or ambiguous requests can confuse the AI.</li>
+                                        <li><strong>Connectivity:</strong> Ensure your server/computer has internet access to reach Google's AI services.</li>
+                                        <li><strong>Service Outage:</strong> Rarely, Google's services might experience temporary issues. Check their status page.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Q: How can I clear the application's local storage data?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p>A: You can clear local storage for this site using your browser's developer tools. Usually, this is found under the "Application" or "Storage" tab. Look for "Local Storage", find the entry for your application's domain (e.g., <code>localhost:9002</code>), and delete the relevant keys (like <code>snapcontent_business_profile_v2</code>, <code>snapcontent_post_history_v3</code>, <code>snapcontent_video_script_history_v1</code>, etc.) or clear all for that domain.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Q: The "Continue Generating Scenes" feature sometimes produces repetitive or short additions. How can I improve it?
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p>A: The AI tries its best to maintain consistency. If results are suboptimal:</p>
+                                    <ul>
+                                        <li>Ensure your initial script request (topic, style, key message) was clear and detailed. The AI uses this as context.</li>
+                                        <li>The quality of existing scenes influences the new ones. If earlier scenes are vague, subsequent ones might be too.</li>
+                                        <li>Try a few times. AI generation can have variability.</li>
+                                        <li>Consider modifying the prompt in <code>src/ai/flows/generate-additional-video-scenes-flow.ts</code> to be more specific about desired length or content for the new scenes, if you are comfortable with prompt engineering.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFive">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    Q: How do I get support if I encounter issues not covered here?
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p>A: For support, please reach out via the support channels provided on the Envato Market item page where you purchased SnapContent AI. Provide as much detail as possible, including error messages and steps to reproduce the issue.</p>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> SnapContent AI. All rights reserved. Powered by Google Generative AI.</p>
+            <p class="small-text">Support: snapcontentai@gmail.com</p>
+            <p class="small-text">Designed for Viena</p>
+        </div>
+    </footer>
+
+    
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Optional: Smooth scroll for internal links (Bootstrap's scrollspy often handles this too)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
